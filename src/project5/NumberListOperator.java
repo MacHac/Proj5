@@ -3,7 +3,15 @@ package project5;
 import java.util.Arrays;
 
 /**
- *
+ * This is a utility class for operating on a list of numbers.  Currently
+ * supported operations are summation, multiplication, and averaging.
+ * 
+ * Optionally, invokers can call fromCommand() with a string argument to
+ * determine which operation is used.
+ * - If the command is invalid, fromCommand() returns false.
+ * - If the command is valid, the result of the operation can be retrieved from
+ *   the method getBuffer().
+ * 
  * @author Alex Wilson
  */
 public class NumberListOperator {

@@ -5,7 +5,13 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 /**
- *
+ * This is the main class.  It is not necessary that you create the file out.txt;
+ * If the rest of the program works properly, the file will be created for you
+ * in the current working directory.
+ * 
+ * If you're missing the file in.txt in your working directory, the program will
+ * report an error.  
+ * 
  * @author Alex Wilson
  */
 public class Main {

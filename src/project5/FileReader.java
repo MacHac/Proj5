@@ -6,7 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
- *
+ * This class reads a file into a string.  After calling operate(), invokers
+ * should call getData() to retrieve the read data.  
+ * 
  * @author Alex Wilson
  */
 public class FileReader extends FileOperator {

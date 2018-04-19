@@ -4,7 +4,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 /**
- *
+ * This is a generic implementation of FileHandler.  It requires that all subclasses
+ * implement the function operate(), which signals the object to perform its
+ * file operation.
+ * 
  * @author Alex Wilson
  */
 public abstract class FileOperator implements FileHandler {

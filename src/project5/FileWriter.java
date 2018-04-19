@@ -6,7 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
- *
+ * This class writes a data string to a file.  Invokers must call setData()
+ * to set the data to be written before calling operate().
+ * 
  * @author Alex Wilson
  */
 public class FileWriter extends FileOperator {
