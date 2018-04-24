@@ -2,6 +2,7 @@ package project5;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * This is a generic implementation of FileHandler.  It requires that all subclasses
@@ -18,11 +19,15 @@ public abstract class FileOperator implements FileHandler {
     }
     
     @Override
-    public void setFile(File f) throws FileNotFoundException {
-        if (!f.exists()) {
-            throw new FileNotFoundException("No file could be found at path "+f.getAbsolutePath()+".");
-        } else {
-            this.myFile = f;
+    public void run() throws FileOperationFailedException {
+        try {
+            this.operate();
+        } catch (FileNotFoundException e) {
+            throw new FileOperationFailedException("File not found.", e);        
+        } catch (IOException e) {
+            throw new FileOperationFailedException("An error occurred.", e);
         }
     }
+    
+    public abstract void operate() throws FileNotFoundException, IOException;
 }

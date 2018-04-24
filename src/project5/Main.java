@@ -22,8 +22,14 @@ public class Main {
     public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
         
-        NumberListOperator op = loadList(getData());
-        if (op == null) return;
+        NumberListOperator op;
+        
+        try {
+            op = loadList(getData());
+        } catch (FileOperationFailedException e) {
+            System.err.println(e.getMessage());
+            return;
+        }
         
         System.out.print("Enter the operation to perform (sum | product | average): ");
         for (;;) {
@@ -34,20 +40,21 @@ public class Main {
         
         double result = op.getBuffer();
         
-        FileWriter write = new FileWriter(new File("out.txt"));
+        FileHandler write = new FileWriter(new File("out.txt"));
         write.setData(Double.toString(result));
         
         try {
-            write.operate();
-        } catch (Exception e) {}
+            write.run();
+        } catch (FileOperationFailedException e) {
+            System.err.println(e.getMessage());
+        }
     }
     
-    private static NumberListOperator loadList(String data) {
-        String[] components = data.split("\\s+");
+    private static NumberListOperator loadList(String data) throws FileOperationFailedException {
+        String[] components = data.split("[\\s_:]+");
         
         if (components.length == 0 || data.length() == 0) {
-            System.err.println("Error: Input file is empty or doesn't exist.");
-            return null;
+            throw new FileOperationFailedException("Input file contains no data.", null);
         } else {
             double[] values = new double[components.length];
             int writeIndex = 0;
@@ -55,7 +62,7 @@ public class Main {
             for (String component : components) {
                 try {
                     values[writeIndex++] = Double.parseDouble(component);
-                } catch (Exception e) {
+                } catch (NumberFormatException e) {
                     System.err.printf("Warning: Input file contains malformed value %s.\n", component);
                     writeIndex--;
                 }
@@ -67,12 +74,10 @@ public class Main {
         }
     }
     
-    private static String getData() {
-        FileReader read = new FileReader(new File("in.txt"));
+    private static String getData() throws FileOperationFailedException {
+        FileHandler read = new FileReader(new File("in.txt"));
         
-        try {
-            read.operate();
-        } catch (Exception e) { return ""; }
+        read.run();
         
         String data = read.getData();
         

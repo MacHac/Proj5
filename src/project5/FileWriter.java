@@ -27,8 +27,13 @@ public class FileWriter extends FileOperator {
         }
     }
     
+    @Override
     public void setData(String data) {
         this.data = data;
     }
     
+    @Override
+    public String getData() {
+        return this.data;
+    }
 }

@@ -27,6 +27,10 @@ public class FileReader extends FileOperator {
         
         this.data = b.toString();
     }
+    
+    public void setData(String data) {
+        this.data = data;
+    }
 
     public String getData() {
         return data;
