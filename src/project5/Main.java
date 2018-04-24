@@ -15,6 +15,25 @@ import java.util.Scanner;
  * @author Alex Wilson
  */
 public class Main {
+    
+    private static class FileNameReader {
+        static String getFileName(Scanner s, String prompt, boolean mustExist) {
+            for (;;) {
+                System.out.print(prompt);
+                String name = s.next();
+                
+                if (mustExist) {
+                    File testFile = new File(name);
+                    if (!testFile.exists()) {
+                        System.err.printf("Error: File %s does not exist.\n", testFile.getAbsolutePath());
+                        continue;
+                    }   
+                }
+                
+                return name;
+            }
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -22,10 +41,13 @@ public class Main {
     public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
         
+        String inFileName = FileNameReader.getFileName(s, "Enter input file path: ", true);
+        String outFileName = FileNameReader.getFileName(s, "Enter output file path: ", false);
+        
         NumberListOperator op;
         
         try {
-            op = loadList(getData());
+            op = loadList(getData(inFileName));
         } catch (FileOperationFailedException e) {
             System.err.println(e.getMessage());
             return;
@@ -40,7 +62,7 @@ public class Main {
         
         double result = op.getBuffer();
         
-        FileHandler write = new FileWriter(new File("out.txt"));
+        FileHandler write = new FileWriter(new File(outFileName));
         write.setData(Double.toString(result));
         
         try {
@@ -74,8 +96,8 @@ public class Main {
         }
     }
     
-    private static String getData() throws FileOperationFailedException {
-        FileHandler read = new FileReader(new File("in.txt"));
+    private static String getData(String fileName) throws FileOperationFailedException {
+        FileHandler read = new FileReader(new File(fileName));
         
         read.run();
         
